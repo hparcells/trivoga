@@ -1,0 +1,21 @@
+{
+  "name": "trivoga",
+  "description": "Boilerplate code for making a server side app using React, Socket.io, and TypeScript.",
+  "version": "1.0.0",
+  "author": "Dave Caruso",
+  "scripts": {
+    "start": "fullstack-system dev",
+    "dev": "fullstack-system dev",
+    "build": "fullstack-system build",
+    "clean": "fullstack-system clean",
+    "production": "fullstack-system production"
+  },
+  "dependencies": {
+    "fullstack-system": "^2.5.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "typescript": "^3.5.3"
+  }
+}
