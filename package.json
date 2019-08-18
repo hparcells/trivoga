@@ -11,6 +11,7 @@
     "production": "fullstack-system production"
   },
   "dependencies": {
+    "@reverse/array": "^1.7.0",
     "fullstack-system": "^2.5.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -19,8 +20,6 @@
   },
   "devDependencies": {
     "@types/react-redux": "^7.1.2",
-    "install": "^0.13.0",
-    "npm": "^6.10.3",
     "typescript": "^3.5.3"
   }
 }

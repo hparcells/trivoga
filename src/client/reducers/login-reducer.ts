@@ -1,16 +1,20 @@
-import { ActionObject } from "../actions";
+import { LoginActionObject } from "../actions";
+import socket from '../socket';
+import store from "../store";
 
 export interface Login {
   username: string,
-  loggedIn: boolean
+  loggedIn: boolean,
+  loginError: string
 };
 
 const initialState: Login = {
   username: '',
-  loggedIn: false
+  loggedIn: false,
+  loginError: ''
 };
 
-export default function(state: Login = initialState, action: ActionObject) {
+export default function(state: Login = initialState, action: LoginActionObject) {
   if(action.type === 'UPDATE_USERNAME') {
     const newState = { ...state };
 
@@ -20,19 +24,38 @@ export default function(state: Login = initialState, action: ActionObject) {
     }
 
     newState.username = action.username;
+    newState.loginError = '';
 
     return newState;
   }
   if(action.type === 'SUBMIT_USERNAME') {
     const newState = { ...state };
     
-    if(newState.username.length < 2) {
+    if(newState.username.length < 2 || newState.username.length > 16) {
+      newState.loginError = 'Your username must be at least two characters and at most 16.';
       return newState;
     }
-    
-    // TODO: Check if username exists.
-    
+
+    socket.emit('checkUsername', newState.username, (loginResult: boolean) => {
+      if(loginResult) {
+        return store.dispatch({ type: 'LOGIN' } as LoginActionObject);
+      }
+      store.dispatch({ type: 'USERNAME_TAKEN' } as LoginActionObject);
+    });
+
+    return newState;
+  }
+  if(action.type === 'LOGIN') {
+    const newState = { ...state };
+
     newState.loggedIn = true;
+
+    return newState;
+  }
+  if(action.type === 'USERNAME_TAKEN') {
+    const newState = { ...state };
+
+    newState.loginError = 'That username is in use right now. Choose another username or wait.';
 
     return newState;
   }
