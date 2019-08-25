@@ -5,7 +5,7 @@ import { Store } from '../store';
 import { updatePlayerCount } from '../actions';
 
 import Login from './Login';
-import Game from './Game';
+import Game from './game/Game';
 
 import socket from '../socket';
 

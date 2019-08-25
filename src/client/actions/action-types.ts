@@ -1,3 +1,5 @@
+import { Difficulty } from "../reducers/menu-reducer";
+
 export type LoginActionObject
   = { type: 'UPDATE_USERNAME', username: string }
   | { type: 'SUBMIT_USERNAME' }
@@ -7,4 +9,8 @@ export type LoginActionObject
 export type GameActionObject
   = { type: 'UPDATE_PLAYER_COUNT', count: number };
 
-export type ActionObject = LoginActionObject | GameActionObject;
+export type MeunuActionObject
+  = { type: 'TOGGLE_CREATION_WINDOW' }
+  | { type: 'CHANGE_DIFFICULTY', difficulty: Difficulty };
+
+export type ActionObject = LoginActionObject | GameActionObject | MeunuActionObject;

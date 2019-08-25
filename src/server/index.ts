@@ -1,5 +1,6 @@
 import { io } from 'fullstack-system';
 import { remove } from '@reverse/array';
+import { player } from './utils/logger';
 
 let users: string[] = [];
 
@@ -13,13 +14,19 @@ io.on('connection', (socket: any) => {
       users.push(username.toLowerCase());
       socket.username = username;
 
+      player(`${socket.username} connected.`);
+
       return callback(true);
     }
     callback(false);
   });
   
   socket.on('disconnect', () => {
-    users = remove(users, socket.username);
-    io.sockets.emit('playerCount', Object.keys(io.sockets.sockets).length);
+    if(socket.username) {
+      users = remove(users, socket.username.toLowerCase());
+      io.sockets.emit('playerCount', Object.keys(io.sockets.sockets).length);
+      
+      player(`${socket.username} disconnected.`);
+    }
   });
 });

@@ -1,4 +1,4 @@
-import { ActionObject, GameActionObject } from "../actions";
+import { GameActionObject } from "../actions";
 
 export interface Game {
   online: number

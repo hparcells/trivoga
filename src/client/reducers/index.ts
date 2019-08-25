@@ -4,6 +4,7 @@ import { ActionObject } from '../actions';
 
 import loginReducer from './login-reducer';
 import gameReducer from './game-reducer';
+import menuReducer from './menu-reducer';
 
 type Reducer = (<T>(state: T, action: ActionObject, fullState: Store) => T) | (<T>(state: T, action: ActionObject) => T);
 
@@ -18,5 +19,6 @@ function combineReducers(reducers: { [name: string]: Reducer }) {
 
 export default combineReducers({
   login: loginReducer as Reducer,
-  game: gameReducer as Reducer
+  game: gameReducer as Reducer,
+  menu: menuReducer as Reducer
 });
