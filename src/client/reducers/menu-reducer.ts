@@ -1,4 +1,6 @@
-import { MeunuActionObject } from "../actions";
+import { MenuActionObject } from "../actions";
+
+import socket from '../socket';
 
 export type Difficulty = 'any' | 'easy' | 'medium' | 'hard';
 export type Type = 'any' | 'multiple' | 'boolean';
@@ -19,7 +21,7 @@ const initialState: Menu = {
   category: 'any'
 }
 
-export default function(state: Menu = initialState, action: MeunuActionObject) {
+export default function(state: Menu = initialState, action: MenuActionObject) {
   if(action.type === 'TOGGLE_CREATION_WINDOW') {
     const newState = { ...state };
 
@@ -31,7 +33,25 @@ export default function(state: Menu = initialState, action: MeunuActionObject) {
     const newState = { ...state };
 
     newState.difficulty = action.difficulty;
+
     return newState;
+  }
+  if(action.type === 'CHANGE_TYPE') {
+    const newState = { ...state };
+
+    newState.type = action.newType;
+
+    return newState;
+  }
+  if(action.type === 'CHANGE_CATEGORY') {
+    const newState = { ...state };
+
+    newState.category = action.category;
+    
+    return newState;
+  }
+  if(action.type === 'CREATE_ROOM') {
+    socket.emit('createRoom', action.gameOptions);
   }
 
   return state;

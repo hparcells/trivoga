@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { Store } from '../../store';
-import { toggleCreationWindow } from '../../actions';
+import socket from '../../socket';
+
+import store, { Store } from '../../store';
+import { toggleCreationWindow, recieveRoomData } from '../../actions';
+import { Room } from '../../../shared/types';
 
 import CreationWindow from './CreationWindow';
 
 function Menu({ creationWindowOpen, toggleCreationWindow }: { creationWindowOpen: boolean, toggleCreationWindow: () => void }) {
+  useEffect(() => {
+    function handleRecieveRoomData(roomData: Room) {
+      store.dispatch(recieveRoomData(roomData));
+    }
+
+    socket.on('recieveRoomData', handleRecieveRoomData);
+    return () => {
+      socket.removeListener('recieveRoomData', handleRecieveRoomData);
+    };
+  }, []);
+  
   return (
     <div>
       <div>

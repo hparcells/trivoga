@@ -2,25 +2,41 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { Store } from '../../store';
-import { changeDifficulty } from '../../actions';
+import { changeDifficulty, changeType, changeCategory, createRoom } from '../../actions';
 import { Difficulty, Type, CategoryId } from '../../reducers/menu-reducer';
+import { GameOptions } from '../../../shared/types';
 
 function CreationWindow(
   {
     difficulty,
     type,
     category,
-    changeDifficulty
+    changeDifficulty,
+    changeType,
+    changeCategory,
+    createRoom
   }:
   {
     difficulty: Difficulty,
     type: Type,
     category: CategoryId,
-    changeDifficulty: (difficulty: Difficulty) => void
+    changeDifficulty: (difficulty: Difficulty) => void,
+    changeType: (newType: Type) => void,
+    changeCategory: (category: CategoryId) => void,
+    createRoom: (gameOptions: GameOptions) => void
   }
 ) {
   function handleDifficultyChange(event: any) {
     changeDifficulty(event.target.value);
+  }
+  function handleChangeType(event: any) {
+    changeType(event.target.value);
+  }
+  function handleChangeCategory(event: any) {
+    changeCategory(event.target.value);
+  }
+  function handleCreateRoom() {
+    createRoom({ difficulty, type, category })
   }
 
   return (
@@ -37,7 +53,7 @@ function CreationWindow(
       </div>
      <div>
       <span>Type:
-        <select value={type}>
+        <select value={type} onChange={handleChangeType}>
           <option value='any'>Any</option>
           <option value='multiple'>Multiple Choice</option>
           <option value='boolean'>True and False</option>
@@ -46,7 +62,7 @@ function CreationWindow(
      </div>
       <div>
         <span>Category:
-          <select value={category}>
+          <select value={category} onChange={handleChangeCategory}>
             <option value='any'>Any Category</option>
             <option value='9'>General Knowledge</option>
             <option value='10'>Entertainment: Books</option>
@@ -75,7 +91,7 @@ function CreationWindow(
           </select>
         </span>
       </div>
-      <button>Go!</button>
+      <button onClick={handleCreateRoom}>Go!</button>
     </div>
   )
 }
@@ -86,7 +102,10 @@ const mapStateToProps = (state: Store) => ({
   category: state.menu.category
 });
 const mapDispatchToProps = {
-  changeDifficulty
+  changeDifficulty,
+  changeType,
+  changeCategory,
+  createRoom
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreationWindow);

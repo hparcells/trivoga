@@ -1,11 +1,14 @@
 import { GameActionObject } from "../actions";
+import { Room } from "../../shared/types";
 
 export interface Game {
-  online: number
+  online: number,
+  room: Room | null
 };
 
 const initialState: Game = {
   online: 0,
+  room: null
 };
 
 export default function(state: Game = initialState, action: GameActionObject) {
@@ -14,6 +17,13 @@ export default function(state: Game = initialState, action: GameActionObject) {
 
     newState.online = action.count;
     
+    return newState;
+  }
+  if(action.type === 'RECIEVE_ROOM_DATA') {
+    const newState = { ...state };
+
+    newState.room = action.roomData;
+
     return newState;
   }
 

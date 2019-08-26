@@ -1,4 +1,4 @@
-import { LoginActionObject } from "../actions";
+import { LoginActionObject, login, usernameTaken } from "../actions";
 import socket from '../socket';
 import store from "../store";
 
@@ -38,9 +38,9 @@ export default function(state: Login = initialState, action: LoginActionObject) 
 
     socket.emit('checkUsername', newState.username, (loginResult: boolean) => {
       if(loginResult) {
-        return store.dispatch({ type: 'LOGIN' } as LoginActionObject);
+        return store.dispatch(login());
       }
-      store.dispatch({ type: 'USERNAME_TAKEN' } as LoginActionObject);
+      store.dispatch(usernameTaken());
     });
 
     return newState;
