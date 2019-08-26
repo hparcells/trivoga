@@ -10,6 +10,22 @@ export default function(socket: any) {
   function destoryRoom() {
     socket.leave(socket.roomCode);
     delete rooms[socket.roomCode];
+    
+    room(`Room ${socket.roomCode} destoryed.`);
+  }
+  function leaveRoom() {
+    if(socket.roomCode) {
+      if(rooms[socket.roomCode].players.length === 1) {
+        destoryRoom();
+        
+        return;
+      }
+  
+      const index = rooms[socket.roomCode].players.map((player) => {
+        return player.username;
+      }).indexOf(socket.username);
+      rooms[socket.roomCode].players = removeAt(rooms[socket.roomCode].players, index);
+    }
   }
 
   socket.on('createRoom', (gameOptions: GameOptions) => {
@@ -37,18 +53,6 @@ export default function(socket: any) {
   });
 
   socket.on('disconnect', () => {
-    if(socket.roomCode) {
-      if(rooms[socket.roomCode].players.length === 1) {
-        destoryRoom();
-
-        room(`Room ${socket.roomCode} destoryed.`);
-        return;
-      }
-
-      const index = rooms[socket.roomCode].players.map((player) => {
-        return player.username;
-      }).indexOf(socket.username);
-      rooms[socket.roomCode].players = removeAt(rooms[socket.roomCode].players, index);
-    }
+    leaveRoom();
   });
 }

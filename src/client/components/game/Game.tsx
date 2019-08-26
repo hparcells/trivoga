@@ -5,6 +5,7 @@ import { Store } from '../../store';
 import { Room } from '../../../shared/types';
 
 import Menu from './Menu';
+import Lobby from './Lobby';
 
 function Game({ room }: { room: Room | null }) {
   return (
@@ -13,7 +14,7 @@ function Game({ room }: { room: Room | null }) {
         room
         ? room.started
           ? <p>Game</p>
-          : <p>Lobby</p>
+          : <Lobby />
         : <Menu />
       }
     </div>

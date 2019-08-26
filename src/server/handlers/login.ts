@@ -25,9 +25,9 @@ export default function(socket: any) {
   socket.on('disconnect', () => {
     if(socket.username) {
       users = remove(users, socket.username.toLowerCase());
-      io.sockets.emit('playerCount', Object.keys(io.sockets.sockets).length);
-      
+
       player(`${socket.username} disconnected.`);
     }
+    io.sockets.emit('playerCount', Object.keys(io.sockets.sockets).length);
   });
 }
