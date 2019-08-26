@@ -11,14 +11,16 @@ export interface Menu {
   creationWindowOpen: boolean,
   difficulty: Difficulty,
   type: Type,
-  category: CategoryId
+  category: CategoryId,
+  roomCode: string
 }
 
 const initialState: Menu = {
   creationWindowOpen: false,
   difficulty: 'any',
   type: 'any',
-  category: 'any'
+  category: 'any',
+  roomCode: ''
 }
 
 export default function(state: Menu = initialState, action: MenuActionObject) {
@@ -52,6 +54,20 @@ export default function(state: Menu = initialState, action: MenuActionObject) {
   }
   if(action.type === 'CREATE_ROOM') {
     socket.emit('createRoom', action.gameOptions);
+  }
+  if(action.type === 'CHANGE_ROOM_CODE') {
+    const newState = { ...state };
+
+    if(!!/^[A-Za-z0-9]{0,4}$/m.exec(action.roomCode)) {
+      newState.roomCode = action.roomCode.toUpperCase();
+    }
+    
+    return newState;
+  }
+  if(action.type === 'JOIN_ROOM') {
+    const newState = { ...state };
+
+    socket.emit('joinRoom', newState.roomCode);
   }
 
   return state;

@@ -1,12 +1,15 @@
+import { io } from 'fullstack-system';
 import { removeAt } from '@reverse/array';
 
-import { generateRoomCode } from "../utils/room";
-import { GameOptions, Room } from "../../shared/types";
-import { room } from "../utils/logger";
+import { GameOptions, Room, Player } from '../../shared/types';
+import { GameSocket } from '..';
+
+import { generateRoomCode } from '../utils/room';
+import { room } from '../utils/logger';
 
 const rooms: {[K in string]: Room} = {};
 
-export default function(socket: any) {
+export default function(socket: GameSocket) {
   function destoryRoom() {
     socket.leave(socket.roomCode);
     delete rooms[socket.roomCode];
@@ -26,6 +29,8 @@ export default function(socket: any) {
       }).indexOf(socket.username);
       rooms[socket.roomCode].players = removeAt(rooms[socket.roomCode].players, index);
     }
+
+    io.sockets.to(socket.roomCode).emit('recieveRoomData', rooms[socket.roomCode]);
   }
 
   socket.on('createRoom', (gameOptions: GameOptions) => {
@@ -35,8 +40,13 @@ export default function(socket: any) {
       roomCode = generateRoomCode();
     }while(Object.keys(rooms).includes(roomCode));
 
+    const playerObject: Player = {
+      username: socket.username,
+      score: 0,
+      ready: false
+    }
     const roomObject: Room = {
-      players: [socket.username],
+      players: [playerObject],
       roomCode: roomCode,
       gameOptions,
       started: false
@@ -50,6 +60,31 @@ export default function(socket: any) {
     room(`Room ${roomCode} created.`);
 
     socket.emit('recieveRoomData', roomObject);
+  });
+  socket.on('joinRoom', (roomCode: string) => {
+    if(!Object.keys(rooms).includes(roomCode)) {
+      socket.emit('roomNoExist');
+    }
+
+    rooms[roomCode].players.push({
+      username: socket.username,
+      score: 0,
+      ready: false
+    });
+
+    socket.join(roomCode);
+    socket.roomCode = roomCode;
+    
+    io.sockets.to(roomCode).emit('recieveRoomData', rooms[roomCode]);
+  });
+  socket.on('toggleReady', () => {
+    const playerIndex = rooms[socket.roomCode].players.map((player) => {
+      return player.username;
+    }).indexOf(socket.username);
+
+    rooms[socket.roomCode].players[playerIndex].ready = !rooms[socket.roomCode].players[playerIndex].ready;
+
+    io.sockets.to(socket.roomCode).emit('recieveRoomData', rooms[socket.roomCode]);
   });
 
   socket.on('disconnect', () => {

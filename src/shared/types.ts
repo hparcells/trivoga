@@ -5,9 +5,10 @@ export interface GameOptions {
   type: Type,
   category: CategoryId
 };
-interface Player {
+export interface Player {
   username: string,
-  score: number
+  score: number,
+  ready: boolean
 }
 export interface Room {
   players: Player[],

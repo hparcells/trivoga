@@ -1,14 +1,17 @@
 import { GameActionObject } from "../actions";
 import { Room } from "../../shared/types";
+import socket from "../socket";
 
 export interface Game {
   online: number,
-  room: Room | null
+  room: Room | null,
+  ready: boolean
 };
 
 const initialState: Game = {
   online: 0,
-  room: null
+  room: null,
+  ready: false
 };
 
 export default function(state: Game = initialState, action: GameActionObject) {
@@ -23,6 +26,14 @@ export default function(state: Game = initialState, action: GameActionObject) {
     const newState = { ...state };
 
     newState.room = action.roomData;
+
+    return newState;
+  }
+  if(action.type === 'TOOGLE_READY') {
+    const newState = { ...state };
+
+    newState.ready = !newState.ready;
+    socket.emit('toggleReady');
 
     return newState;
   }

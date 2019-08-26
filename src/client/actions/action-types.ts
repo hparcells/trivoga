@@ -12,10 +12,13 @@ export type MenuActionObject
   | { type: 'CHANGE_DIFFICULTY', difficulty: Difficulty }
   | { type: 'CHANGE_TYPE', newType: Type }
   | { type: 'CHANGE_CATEGORY', category: CategoryId }
-  | { type: 'CREATE_ROOM', gameOptions: GameOptions };
+  | { type: 'CREATE_ROOM', gameOptions: GameOptions }
+  | { type: 'CHANGE_ROOM_CODE', roomCode: string }
+  | { type: 'JOIN_ROOM' };
   
 export type GameActionObject
   = { type: 'UPDATE_PLAYER_COUNT', count: number }
-  | { type: 'RECIEVE_ROOM_DATA', roomData: Room };
+  | { type: 'RECIEVE_ROOM_DATA', roomData: Room }
+  | { type: 'TOOGLE_READY' };
   
 export type ActionObject = LoginActionObject | GameActionObject | MenuActionObject;

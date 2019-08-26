@@ -30,10 +30,19 @@ export function changeCategory(category: CategoryId): MenuActionObject {
 export function createRoom(gameOptions: GameOptions): MenuActionObject {
   return { type: 'CREATE_ROOM', gameOptions };
 }
+export function changeRoomCode(roomCode: string): MenuActionObject {
+  return { type: 'CHANGE_ROOM_CODE', roomCode };
+}
+export function joinRoom(): MenuActionObject {
+  return { type: 'JOIN_ROOM' };
+}
 
 export function updatePlayerCount(count: number): GameActionObject {
   return { type: 'UPDATE_PLAYER_COUNT', count };
 }
 export function recieveRoomData(roomData: Room): GameActionObject {
   return { type: 'RECIEVE_ROOM_DATA', roomData };
+}
+export function toggleReady(): GameActionObject {
+  return { type: 'TOOGLE_READY' };
 }

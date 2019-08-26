@@ -4,12 +4,27 @@ import { connect } from 'react-redux';
 import socket from '../../socket';
 
 import store, { Store } from '../../store';
-import { toggleCreationWindow, recieveRoomData } from '../../actions';
+import { toggleCreationWindow, recieveRoomData, changeRoomCode, joinRoom } from '../../actions';
 import { Room } from '../../../shared/types';
 
 import CreationWindow from './CreationWindow';
 
-function Menu({ creationWindowOpen, toggleCreationWindow }: { creationWindowOpen: boolean, toggleCreationWindow: () => void }) {
+function Menu(
+  {
+    creationWindowOpen,
+    roomCode,
+    toggleCreationWindow,
+    changeRoomCode,
+    joinRoom
+  }:
+  {
+    creationWindowOpen: boolean,
+    roomCode: string,
+    toggleCreationWindow: () => void
+    changeRoomCode: (roomCode: string) => void,
+    joinRoom: () => void
+  }
+) {
   useEffect(() => {
     function handleRecieveRoomData(roomData: Room) {
       store.dispatch(recieveRoomData(roomData));
@@ -21,6 +36,10 @@ function Menu({ creationWindowOpen, toggleCreationWindow }: { creationWindowOpen
     };
   }, []);
   
+  function handleRoomCodeChange(event: any) {
+    changeRoomCode(event.target.value);
+  }
+
   return (
     <div>
       <div>
@@ -36,18 +55,21 @@ function Menu({ creationWindowOpen, toggleCreationWindow }: { creationWindowOpen
       <br />
   
       <div>
-        <input type='text' />
-        <button placeholder='Room Code'>Join Room</button>
+        <input type='text' onChange={handleRoomCodeChange} value={roomCode} />
+        <button onClick={joinRoom}>Join Room</button>
       </div>
     </div>
   );
 }
 
 const mapStateToProps = (state: Store) => ({
-  creationWindowOpen: state.menu.creationWindowOpen
+  creationWindowOpen: state.menu.creationWindowOpen,
+  roomCode: state.menu.roomCode
 });
 const mapDispatchToProps = {
-  toggleCreationWindow
+  toggleCreationWindow,
+  changeRoomCode,
+  joinRoom
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);
