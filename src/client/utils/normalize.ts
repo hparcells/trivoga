@@ -1,4 +1,6 @@
-import { CategoryId, Category, Difficulty, Type } from "../reducers/menu-reducer";
+import { capitalize } from '@reverse/string';
+
+import { CategoryId, Category, Difficulty, Type } from '../reducers/menu-reducer';
 
 const categories: Category[] = [
   'eneral Knowledge',
@@ -39,7 +41,7 @@ export function normalizeDifficulty(difficulty: Difficulty): string {
     return 'Any Difficulty';
   }
 
-  return difficulty.toUpperCase();
+  return capitalize(difficulty);
 }
 export function normalizeType(type: Type): string {
   if(type === 'any') {

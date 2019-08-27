@@ -1,5 +1,5 @@
-import { Difficulty, Type, CategoryId } from "../reducers/menu-reducer";
-import { GameOptions, Room } from "../../shared/types";
+import { Difficulty, Type, CategoryId } from '../reducers/menu-reducer';
+import { GameOptions, Room } from '../../shared/types';
 
 export type LoginActionObject
   = { type: 'UPDATE_USERNAME', username: string }
@@ -19,6 +19,7 @@ export type MenuActionObject
 export type GameActionObject
   = { type: 'UPDATE_PLAYER_COUNT', count: number }
   | { type: 'RECIEVE_ROOM_DATA', roomData: Room }
-  | { type: 'TOOGLE_READY' };
+  | { type: 'TOOGLE_READY' }
+  | { type: 'START_GAME' };
   
 export type ActionObject = LoginActionObject | GameActionObject | MenuActionObject;

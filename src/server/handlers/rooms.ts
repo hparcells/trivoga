@@ -7,7 +7,7 @@ import { GameSocket } from '..';
 import { generateRoomCode } from '../utils/room';
 import { room } from '../utils/logger';
 
-const rooms: {[K in string]: Room} = {};
+export const rooms: {[K in string]: Room} = {};
 
 export default function(socket: GameSocket) {
   function destoryRoom() {
@@ -49,7 +49,13 @@ export default function(socket: GameSocket) {
       players: [playerObject],
       roomCode: roomCode,
       gameOptions,
-      started: false
+      started: false,
+      trivia: {
+        question: '',
+        answer: '',
+        incorrectAnswers: [],
+        sessionToken: ''
+      }
     };
 
     rooms[roomCode] = roomObject;

@@ -5,7 +5,7 @@ import socket from '../../socket';
 
 import store, { Store } from '../../store';
 import { Room } from '../../../shared/types';
-import { toggleReady, recieveRoomData } from '../../actions';
+import { toggleReady, recieveRoomData, startGame } from '../../actions';
 
 import { normalizeDifficulty, normalizeType, normalizeCategoryId } from '../../utils/normalize';
 
@@ -14,13 +14,15 @@ function Lobby(
     username,
     room,
     ready,
-    toggleReady
+    toggleReady,
+    startGame
   }:
   {
     username: string,
     room: Room | null,
     ready: boolean,
-    toggleReady: () => void
+    toggleReady: () => void,
+    startGame: () => void
   }
 ) {
   useEffect(() => {
@@ -36,10 +38,10 @@ function Lobby(
   
   function handleToggleReady() {
     if(
-      (room && room.players[0].ready == true) && (room && room.players[1].ready === true)
+      (room && room.players[0].ready == true) && (room && room.players[1] && room.players[1].ready === true)
       && (room && room.players[0].username === username)
     ) {
-      // startGame();
+      startGame();
       return;
     }
 
@@ -55,7 +57,7 @@ function Lobby(
         {
           room && room.players[0].username === username
           ? ready
-            ?  (room && room.players[0].ready == true) && (room && room.players[1].ready === true)
+            ?  (room && room.players[0].ready == true) && (room && room.players[1] && room.players[1].ready === true)
               ? 'Start'
               : 'Not Ready'
             : 'Ready'
@@ -80,7 +82,8 @@ const mapStateToProps = (state: Store) => ({
   ready: state.game.ready 
 });
 const mapDispatchToProps = {
-  toggleReady
+  toggleReady,
+  startGame
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Lobby);

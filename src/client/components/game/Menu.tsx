@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 
 import socket from '../../socket';
 
-import store, { Store } from '../../store';
-import { toggleCreationWindow, recieveRoomData, changeRoomCode, joinRoom } from '../../actions';
-import { Room } from '../../../shared/types';
+import { Store } from '../../store';
+import { toggleCreationWindow, changeRoomCode, joinRoom } from '../../actions';
 
 import CreationWindow from './CreationWindow';
 
@@ -26,19 +25,14 @@ function Menu(
   }
 ) {
   useEffect(() => {
-    function handleRecieveRoomData(roomData: Room) {
-      store.dispatch(recieveRoomData(roomData));
-    }
-    function handleNonExistantRoom() {
+    function handleNonExistentRoom() {
       // TODO:
     }
 
-    socket.on('recieveRoomData', handleRecieveRoomData);
-    socket.on('roomNoExist', handleNonExistantRoom);
+    socket.on('roomNoExist', handleNonExistentRoom);
 
     return () => {
-      socket.removeListener('recieveRoomData', handleRecieveRoomData);
-      socket.removeListener('roomNoExist', handleNonExistantRoom);
+      socket.removeListener('roomNoExist', handleNonExistentRoom);
     };
   }, []);
   

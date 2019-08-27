@@ -1,6 +1,6 @@
-import { LoginActionObject, GameActionObject, MenuActionObject } from "./action-types";
-import { Difficulty, Type, CategoryId } from "../reducers/menu-reducer";
-import { GameOptions, Room } from "../../shared/types";
+import { LoginActionObject, GameActionObject, MenuActionObject } from './action-types';
+import { Difficulty, Type, CategoryId } from '../reducers/menu-reducer';
+import { GameOptions, Room } from '../../shared/types';
 
 export function updateUsername(username: string): LoginActionObject {
   return { type: 'UPDATE_USERNAME', username };
@@ -45,4 +45,7 @@ export function recieveRoomData(roomData: Room): GameActionObject {
 }
 export function toggleReady(): GameActionObject {
   return { type: 'TOOGLE_READY' };
+}
+export function startGame(): GameActionObject {
+  return { type: 'START_GAME' };
 }

@@ -1,4 +1,4 @@
-import { Difficulty, Type, CategoryId } from "../client/reducers/menu-reducer";
+import { Difficulty, Type, CategoryId } from '../client/reducers/menu-reducer';
 
 export interface GameOptions {
   difficulty: Difficulty,
@@ -14,5 +14,11 @@ export interface Room {
   players: Player[],
   roomCode: string,
   gameOptions: GameOptions
-  started: boolean
+  started: boolean,
+  trivia: {
+    question: string,
+    answer: string,
+    incorrectAnswers: string[],
+    sessionToken: string
+  }
 }

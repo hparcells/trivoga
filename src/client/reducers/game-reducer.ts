@@ -1,6 +1,6 @@
-import { GameActionObject } from "../actions";
-import { Room } from "../../shared/types";
-import socket from "../socket";
+import { GameActionObject } from '../actions';
+import { Room } from '../../shared/types';
+import socket from '../socket';
 
 export interface Game {
   online: number,
@@ -26,7 +26,7 @@ export default function(state: Game = initialState, action: GameActionObject) {
     const newState = { ...state };
 
     newState.room = action.roomData;
-
+    
     return newState;
   }
   if(action.type === 'TOOGLE_READY') {
@@ -36,6 +36,9 @@ export default function(state: Game = initialState, action: GameActionObject) {
     socket.emit('toggleReady');
 
     return newState;
+  }
+  if(action.type === 'START_GAME') {
+    socket.emit('startGame');
   }
 
   return state;

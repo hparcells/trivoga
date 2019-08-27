@@ -1,6 +1,6 @@
-import { LoginActionObject, login, usernameTaken } from "../actions";
+import { LoginActionObject, login, usernameTaken } from '../actions';
 import socket from '../socket';
-import store from "../store";
+import store from '../store';
 
 export interface Login {
   username: string,

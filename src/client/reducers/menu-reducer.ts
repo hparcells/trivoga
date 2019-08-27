@@ -1,4 +1,4 @@
-import { MenuActionObject } from "../actions";
+import { MenuActionObject } from '../actions';
 
 import socket from '../socket';
 
