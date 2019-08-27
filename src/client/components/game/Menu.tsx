@@ -29,10 +29,16 @@ function Menu(
     function handleRecieveRoomData(roomData: Room) {
       store.dispatch(recieveRoomData(roomData));
     }
+    function handleNonExistantRoom() {
+      // TODO:
+    }
 
     socket.on('recieveRoomData', handleRecieveRoomData);
+    socket.on('roomNoExist', handleNonExistantRoom);
+
     return () => {
       socket.removeListener('recieveRoomData', handleRecieveRoomData);
+      socket.removeListener('roomNoExist', handleNonExistantRoom);
     };
   }, []);
   

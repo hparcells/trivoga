@@ -64,6 +64,8 @@ export default function(socket: GameSocket) {
   socket.on('joinRoom', (roomCode: string) => {
     if(!Object.keys(rooms).includes(roomCode)) {
       socket.emit('roomNoExist');
+
+      return;
     }
 
     rooms[roomCode].players.push({
