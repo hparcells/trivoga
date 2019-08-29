@@ -14,13 +14,15 @@ function Lobby(
     username,
     room,
     ready,
+    startButtonDisabled,
     toggleReady,
-    startGame
+    startGame,
   }:
   {
     username: string,
     room: Room | null,
     ready: boolean,
+    startButtonDisabled: boolean,
     toggleReady: () => void,
     startGame: () => void
   }
@@ -42,6 +44,7 @@ function Lobby(
       && (room && room.players[0].username === username)
     ) {
       startGame();
+
       return;
     }
 
@@ -53,7 +56,7 @@ function Lobby(
       <p>TODO: Title</p>
       <p>Join with: {room && room.roomCode}</p>
       <p>{room && room.players[0].username} vs. {room && room.players[1] ? room.players[1].username : '???'}</p>
-      <button onClick={handleToggleReady}>
+      <button onClick={handleToggleReady} disabled={startButtonDisabled}>
         {
           room && room.players[0].username === username
           ? ready
@@ -79,7 +82,8 @@ function Lobby(
 const mapStateToProps = (state: Store) => ({
   username: state.login.username,
   room: state.game.room,
-  ready: state.game.ready 
+  ready: state.game.ready,
+  startButtonDisabled: state.game.startButtonDisabled
 });
 const mapDispatchToProps = {
   toggleReady,

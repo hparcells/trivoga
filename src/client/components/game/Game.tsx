@@ -8,8 +8,9 @@ import socket from '../../socket';
 
 import { recieveRoomData } from '../../actions';
 
-import Menu from './Menu';
+import Menu from './menu/Menu';
 import Lobby from './Lobby';
+import Trivia from './trivia/Trivia';
 
 function Game({ room }: { room: Room | null }) {
   useEffect(() => {
@@ -29,7 +30,7 @@ function Game({ room }: { room: Room | null }) {
       {
         room
         ? room.started
-          ? JSON.stringify(room)
+          ? <Trivia />
           : <Lobby />
         : <Menu />
       }

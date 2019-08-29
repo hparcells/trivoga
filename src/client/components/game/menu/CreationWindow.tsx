@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Store } from '../../store';
-import { changeDifficulty, changeType, changeCategory, createRoom } from '../../actions';
-import { Difficulty, Type, CategoryId } from '../../reducers/menu-reducer';
-import { GameOptions } from '../../../shared/types';
+import { Store } from '../../../store';
+import { changeDifficulty, changeType, changeCategory, createRoom } from '../../../actions';
+import { Difficulty, Type, CategoryId } from '../../../reducers/menu-reducer';
+import { GameOptions } from '../../../../shared/types';
 
 function CreationWindow(
   {

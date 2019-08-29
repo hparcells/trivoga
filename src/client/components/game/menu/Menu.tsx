@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import socket from '../../socket';
+import socket from '../../../socket';
 
-import { Store } from '../../store';
-import { toggleCreationWindow, changeRoomCode, joinRoom } from '../../actions';
+import { Store } from '../../../store';
+import { toggleCreationWindow, changeRoomCode, joinRoom } from '../../../actions';
 
 import CreationWindow from './CreationWindow';
 

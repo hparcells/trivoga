@@ -17,10 +17,15 @@ export default function(socket: GameSocket) {
   }
   
   socket.on('startGame', async() => {
-    rooms[socket.roomCode].trivia.sessionToken = await getSessionToken();
-    rooms[socket.roomCode].started = true;
+    try {
+      rooms[socket.roomCode].trivia.sessionToken = await getSessionToken();
+      rooms[socket.roomCode].started = true;
 
-    await newQuestion();
+      await newQuestion();
+    }catch(e) {
+      // Webpage is blocked on network.
+    }
+
 
     io.sockets.to(socket.roomCode).emit('recieveRoomData', rooms[socket.roomCode]);
   });

@@ -1,3 +1,5 @@
+import syncReducer from 'sync-reducer';
+
 import { LoginActionObject, login, usernameTaken } from '../actions';
 import socket from '../socket';
 import store from '../store';
@@ -14,7 +16,7 @@ const initialState: Login = {
   loginError: ''
 };
 
-export default function(state: Login = initialState, action: LoginActionObject) {
+function loginReducer(state: Login = initialState, action: LoginActionObject) {
   if(action.type === 'UPDATE_USERNAME') {
     const newState = { ...state };
 
@@ -62,3 +64,5 @@ export default function(state: Login = initialState, action: LoginActionObject) 
 
   return state;
 }
+
+export default syncReducer(loginReducer, 'trivoga-login', { ignore: ['loggedIn'] });

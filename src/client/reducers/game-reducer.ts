@@ -5,13 +5,15 @@ import socket from '../socket';
 export interface Game {
   online: number,
   room: Room | null,
-  ready: boolean
+  ready: boolean,
+  startButtonDisabled: boolean
 };
 
 const initialState: Game = {
   online: 0,
   room: null,
-  ready: false
+  ready: false,
+  startButtonDisabled: false
 };
 
 export default function(state: Game = initialState, action: GameActionObject) {
@@ -38,7 +40,13 @@ export default function(state: Game = initialState, action: GameActionObject) {
     return newState;
   }
   if(action.type === 'START_GAME') {
+    const newState = { ...state };
+
+    newState.startButtonDisabled = true;
+
     socket.emit('startGame');
+
+    return newState;
   }
 
   return state;
