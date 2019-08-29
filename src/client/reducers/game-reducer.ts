@@ -6,14 +6,18 @@ export interface Game {
   online: number,
   room: Room | null,
   ready: boolean,
-  startButtonDisabled: boolean
+  startButtonDisabled: boolean,
+  hasAnsweredQuestion: boolean,
+  selectedAnswer: string
 };
 
 const initialState: Game = {
   online: 0,
   room: null,
   ready: false,
-  startButtonDisabled: false
+  startButtonDisabled: false,
+  hasAnsweredQuestion: false,
+  selectedAnswer: ''
 };
 
 export default function(state: Game = initialState, action: GameActionObject) {
@@ -27,6 +31,10 @@ export default function(state: Game = initialState, action: GameActionObject) {
   if(action.type === 'RECIEVE_ROOM_DATA') {
     const newState = { ...state };
 
+    if(newState.room && newState.room.trivia.question !== action.roomData.trivia.question) {
+      newState.hasAnsweredQuestion = false;
+      newState.selectedAnswer = '';
+    }
     newState.room = action.roomData;
     
     return newState;
@@ -45,6 +53,16 @@ export default function(state: Game = initialState, action: GameActionObject) {
     newState.startButtonDisabled = true;
 
     socket.emit('startGame');
+
+    return newState;
+  }
+  if(action.type === 'SUBMIT_ANSWER') {
+    const newState = { ...state };
+
+    newState.hasAnsweredQuestion = true;
+    newState.selectedAnswer = action.answer;
+
+    socket.emit('submitAnswer', action.answer);
 
     return newState;
   }

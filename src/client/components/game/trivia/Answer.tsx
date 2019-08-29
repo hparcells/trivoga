@@ -1,13 +1,38 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { decodeHTML } from 'entities';
 
-function Answer({ label }: { label: string }) {
+import { submitAnswer } from '../../../actions';
+import { Store } from '../../../store';
+
+function Answer(
+  {
+    label,
+    hasAnsweredQuestion,
+    submitAnswer,
+  }:
+  {
+    label: string,
+    hasAnsweredQuestion: boolean,
+    submitAnswer: (answer: string) => void
+  }
+) {
   function handleAnswerClick() {
-    console.log(label);
+    if(!hasAnsweredQuestion) {
+      submitAnswer(label);
+    }
   }
 
   return (
-    <li onClick={handleAnswerClick}>{label}</li>
+    <li onClick={handleAnswerClick}>{decodeHTML(label)}</li>
   );
 }
 
-export default Answer;
+const mapStateToProps = (state: Store) => ({
+  hasAnsweredQuestion: state.game.hasAnsweredQuestion,
+});
+const mapDispatchToProps = {
+  submitAnswer
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Answer);

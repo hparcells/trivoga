@@ -16,9 +16,11 @@ export interface Room {
   gameOptions: GameOptions
   started: boolean,
   trivia: {
+    round: number,
     question: string,
     answer: string,
-    incorrectAnswers: string[],
-    sessionToken: string
+    answers: string[],
+    sessionToken: string,
+    submittedAnswers: number
   }
 }

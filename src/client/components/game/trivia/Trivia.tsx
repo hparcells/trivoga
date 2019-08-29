@@ -1,22 +1,50 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { shuffle } from '@reverse/array';
+import { decodeHTML } from 'entities';
 
-import { Store } from '../../../store';
+import socket from '../../../socket';
+
+import store, { Store } from '../../../store';
 import { Room } from '../../../../shared/types';
+import { newRound } from '../../../actions';
 
 import Answer from './Answer';
 
-function Trivia({ room }: { room: Room | null }) {
+function Trivia(
+  {
+    room,
+    selectedAnswer
+  }:
+  {
+    room: Room | null,
+    selectedAnswer: string
+  }
+) {
   const triviaData = room && room.trivia;
-
+  
   return (
     <div>
-      <p>Question: {triviaData && triviaData.question}</p>
+      <p>Scores:</p>
       {
-        triviaData && shuffle(triviaData.incorrectAnswers.concat(triviaData.answer)).map((answer, index) => {
+        room && room.players.map((player) => {
           return (
-            <Answer key={index} label={answer} />
+            <li>{player.username}: {player.score}</li>
+          );
+        })
+      }
+
+      <p>Question {triviaData && triviaData.round}: {triviaData && decodeHTML(triviaData.question)}</p>
+      {
+        triviaData && triviaData.answers.map((answer, index) => {
+          return (
+            <span
+              style={{
+                color: selectedAnswer ? triviaData.answer === answer ? 'green' : 'red' : 'black'
+              }}
+              key={index}
+            >
+              <Answer label={answer} />
+            </span>
           )
         })
       }
@@ -25,8 +53,8 @@ function Trivia({ room }: { room: Room | null }) {
 }
 
 const mapStateToProps = (state: Store) => ({
-  room: state.game.room
+  room: state.game.room,
+  selectedAnswer: state.game.selectedAnswer
 });
 
 export default connect(mapStateToProps, {})(Trivia);
-  

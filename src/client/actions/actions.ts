@@ -49,3 +49,9 @@ export function toggleReady(): GameActionObject {
 export function startGame(): GameActionObject {
   return { type: 'START_GAME' };
 }
+export function submitAnswer(answer: string): GameActionObject {
+  return { type: 'SUBMIT_ANSWER', answer };
+}
+export function newRound(): GameActionObject {
+  return { type: 'NEW_ROUND' };
+}

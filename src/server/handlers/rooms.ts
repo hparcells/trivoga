@@ -51,10 +51,12 @@ export default function(socket: GameSocket) {
       gameOptions,
       started: false,
       trivia: {
+        round: 1,
         question: '',
         answer: '',
-        incorrectAnswers: [],
-        sessionToken: ''
+        answers: [],
+        sessionToken: '',
+        submittedAnswers: 0
       }
     };
 

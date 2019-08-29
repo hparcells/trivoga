@@ -20,6 +20,8 @@ export type GameActionObject
   = { type: 'UPDATE_PLAYER_COUNT', count: number }
   | { type: 'RECIEVE_ROOM_DATA', roomData: Room }
   | { type: 'TOOGLE_READY' }
-  | { type: 'START_GAME' };
+  | { type: 'START_GAME' }
+  | { type: 'SUBMIT_ANSWER', answer: string }
+  | { type: 'NEW_ROUND' };
   
 export type ActionObject = LoginActionObject | GameActionObject | MenuActionObject;
