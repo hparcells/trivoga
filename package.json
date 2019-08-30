@@ -11,6 +11,7 @@
     "production": "fullstack-system production"
   },
   "dependencies": {
+    "@material-ui/core": "^4.3.3",
     "@reverse/array": "^1.7.0",
     "@reverse/random": "^1.0.9",
     "@reverse/string": "^1.1.0",

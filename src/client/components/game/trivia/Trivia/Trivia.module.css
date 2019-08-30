@@ -1,0 +1,40 @@
+.scoreWrapper {
+  display: flex;
+}
+.scoreDiv {
+  flex-grow: 1;
+}
+.scoreScore {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 32px;
+  line-height: 37px;
+  
+  color: #000000;
+
+  margin: 0;
+}
+.scoreName {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: calc(1vw + 6px);
+  line-height: 28px;
+
+  color: #000000;
+
+  margin: 0;
+}
+.scoreRound {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+  text-align: center;
+
+  color: #000000;
+
+  margin: 0;
+}

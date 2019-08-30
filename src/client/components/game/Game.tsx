@@ -10,7 +10,7 @@ import { recieveRoomData } from '../../actions';
 
 import Menu from './menu/Menu';
 import Lobby from './Lobby';
-import Trivia from './trivia/Trivia';
+import Trivia from './trivia/Trivia/Trivia';
 
 function Game({ room }: { room: Room | null }) {
   useEffect(() => {

@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Inspector from 'react-inspector';
 
 import { Store } from '../../../store';
 import { Room } from '../../../../shared/types';
