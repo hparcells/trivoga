@@ -17,7 +17,7 @@ export default function(socket: GameSocket) {
   }
   function leaveRoom() {
     if(socket.roomCode) {
-      if(rooms[socket.roomCode].players.length === 1) {
+      if(rooms[socket.roomCode].players.length === 10) {
         destoryRoom();
         
         return;
