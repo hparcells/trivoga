@@ -17,21 +17,24 @@ export default function(socket: GameSocket) {
   }
   function leaveRoom() {
     if(socket.roomCode) {
-      if(rooms[socket.roomCode].players.length === 10) {
+      
+      if(rooms[socket.roomCode].players.length === 1) {
         destoryRoom();
+        
+        socket.roomCode = '';
         
         return;
       }
-  
+      
       const index = rooms[socket.roomCode].players.map((player) => {
         return player.username;
       }).indexOf(socket.username);
       rooms[socket.roomCode].players = removeAt(rooms[socket.roomCode].players, index);
+      
+      socket.leave(socket.roomCode);
+      io.sockets.to(socket.roomCode).emit('recieveRoomData', rooms[socket.roomCode]);
+      socket.roomCode = '';
     }
-
-    socket.leave(socket.roomCode);
-    io.sockets.to(socket.roomCode).emit('recieveRoomData', rooms[socket.roomCode]);
-    socket.roomCode = '';
   }
 
   socket.on('createRoom', (gameOptions: GameOptions) => {

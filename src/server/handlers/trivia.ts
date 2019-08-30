@@ -43,11 +43,11 @@ export default function(socket: GameSocket) {
 
     if(answer === rooms[socket.roomCode].trivia.answer) {
       rooms[socket.roomCode].players[playerIndex].score++;
-      if(rooms[socket.roomCode].players[playerIndex].score ===  1) {
+      if(rooms[socket.roomCode].players[playerIndex].score === 10) {
         // TODO: Scorecard
         rooms[socket.roomCode].hasWinner = true;
         rooms[socket.roomCode].winner = socket.username;
-        
+
         io.sockets.to(socket.roomCode).emit('recieveRoomData', rooms[socket.roomCode]);
 
         return;
