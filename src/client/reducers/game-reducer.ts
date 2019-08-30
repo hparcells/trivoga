@@ -35,6 +35,7 @@ export default function(state: Game = initialState, action: GameActionObject) {
       newState.hasAnsweredQuestion = false;
       newState.selectedAnswer = '';
     }
+
     newState.room = action.roomData;
     
     return newState;
@@ -63,6 +64,22 @@ export default function(state: Game = initialState, action: GameActionObject) {
     newState.selectedAnswer = action.answer;
 
     socket.emit('submitAnswer', action.answer);
+
+    return newState;
+  }
+  if(action.type === 'LEAVE_GAME') {
+    let newState = { ...state };
+
+    socket.emit('leaveRoom');
+    
+    newState = {
+      ...newState,
+      room: null,
+      ready: false,
+      startButtonDisabled: false,
+      hasAnsweredQuestion: false,
+      selectedAnswer: ''
+    }
 
     return newState;
   }

@@ -22,6 +22,7 @@ export type GameActionObject
   | { type: 'TOOGLE_READY' }
   | { type: 'START_GAME' }
   | { type: 'SUBMIT_ANSWER', answer: string }
-  | { type: 'NEW_ROUND' };
+  | { type: 'NEW_ROUND' }
+  | { type: 'LEAVE_GAME' };
   
 export type ActionObject = LoginActionObject | GameActionObject | MenuActionObject;

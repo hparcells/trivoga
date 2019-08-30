@@ -22,5 +22,7 @@ export interface Room {
     answers: string[],
     sessionToken: string,
     submittedAnswers: number
-  }
+  },
+  hasWinner: boolean,
+  winner: string
 }

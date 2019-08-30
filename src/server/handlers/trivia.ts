@@ -42,10 +42,15 @@ export default function(socket: GameSocket) {
     }).indexOf(socket.username);
 
     if(answer === rooms[socket.roomCode].trivia.answer) {
-      if(rooms[socket.roomCode].players[playerIndex].score + 1 ===  10) {
-        // TODO: Win
-      }else {
-        rooms[socket.roomCode].players[playerIndex].score++;
+      rooms[socket.roomCode].players[playerIndex].score++;
+      if(rooms[socket.roomCode].players[playerIndex].score ===  1) {
+        // TODO: Scorecard
+        rooms[socket.roomCode].hasWinner = true;
+        rooms[socket.roomCode].winner = socket.username;
+        
+        io.sockets.to(socket.roomCode).emit('recieveRoomData', rooms[socket.roomCode]);
+
+        return;
       }
     }else {
       if(!(rooms[socket.roomCode].players[playerIndex].score - 1 < 0)) {

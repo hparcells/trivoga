@@ -55,3 +55,6 @@ export function submitAnswer(answer: string): GameActionObject {
 export function newRound(): GameActionObject {
   return { type: 'NEW_ROUND' };
 }
+export function leaveGame(): GameActionObject {
+  return { type: 'LEAVE_GAME' };
+}

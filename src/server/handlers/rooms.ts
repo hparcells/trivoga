@@ -11,7 +11,6 @@ export const rooms: {[K in string]: Room} = {};
 
 export default function(socket: GameSocket) {
   function destoryRoom() {
-    socket.leave(socket.roomCode);
     delete rooms[socket.roomCode];
     
     room(`Room ${socket.roomCode} destoryed.`);
@@ -30,7 +29,9 @@ export default function(socket: GameSocket) {
       rooms[socket.roomCode].players = removeAt(rooms[socket.roomCode].players, index);
     }
 
+    socket.leave(socket.roomCode);
     io.sockets.to(socket.roomCode).emit('recieveRoomData', rooms[socket.roomCode]);
+    socket.roomCode = '';
   }
 
   socket.on('createRoom', (gameOptions: GameOptions) => {
@@ -57,7 +58,9 @@ export default function(socket: GameSocket) {
         answers: [],
         sessionToken: '',
         submittedAnswers: 0
-      }
+      },
+      hasWinner: false,
+      winner: ''
     };
 
     rooms[roomCode] = roomObject;
@@ -95,6 +98,9 @@ export default function(socket: GameSocket) {
     rooms[socket.roomCode].players[playerIndex].ready = !rooms[socket.roomCode].players[playerIndex].ready;
 
     io.sockets.to(socket.roomCode).emit('recieveRoomData', rooms[socket.roomCode]);
+  });
+  socket.on('leaveRoom', () => {
+    leaveRoom();
   });
 
   socket.on('disconnect', () => {
