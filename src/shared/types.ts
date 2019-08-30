@@ -10,6 +10,19 @@ export interface Player {
   score: number,
   ready: boolean
 }
+interface PlayerScorecard {
+  username: string,
+  providedAnswer: string,
+  score: number
+}
+interface RoundInfo {
+  question: string,
+  answer: string,
+  playerData: PlayerScorecard[]
+}
+export interface Scorecard {
+  rounds: RoundInfo[]
+}
 export interface Room {
   players: Player[],
   roomCode: string,
@@ -24,5 +37,6 @@ export interface Room {
     submittedAnswers: number
   },
   hasWinner: boolean,
-  winner: string
+  winner: string,
+  scorecard: Scorecard
 }

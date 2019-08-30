@@ -63,7 +63,10 @@ export default function(socket: GameSocket) {
         submittedAnswers: 0
       },
       hasWinner: false,
-      winner: ''
+      winner: '',
+      scorecard: {
+        rounds: []
+      }
     };
 
     rooms[roomCode] = roomObject;
