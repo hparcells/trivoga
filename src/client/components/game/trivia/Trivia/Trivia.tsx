@@ -6,7 +6,7 @@ import { Store } from '../../../../store';
 import { Room } from '../../../../../shared/types';
 
 import Answer from '../Answer/Answer';
-import PostGame from '../PostGame';
+import PostGame from '../PostGame/PostGame';
 import Question from '../Question/Question';
 
 import styles from './Trivia.module.css';
@@ -51,7 +51,7 @@ function Trivia(
             {
               triviaData && triviaData.answers.map((answer, index) => {
                 return (
-                  <Answer label={answer} resultClass={selectedAnswer ? triviaData.answer === answer ? 'correct' : 'incorrect' : 'root'} />
+                  <Answer key={index} label={answer} resultClass={selectedAnswer ? triviaData.answer === answer ? 'correct' : 'incorrect' : 'root'} />
                 )
               })
             }
