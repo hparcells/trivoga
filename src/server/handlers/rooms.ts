@@ -53,9 +53,11 @@ export default function(socket: GameSocket) {
         }
 
         io.sockets.to(socket.roomCode).emit('recieveRoomData', rooms[socket.roomCode]);
+        rooms[socket.roomCode].players = removeAt(rooms[socket.roomCode].players, index);
 
         socket.leave(socket.roomCode);
         socket.roomCode = '';
+
 
         return;
       }
