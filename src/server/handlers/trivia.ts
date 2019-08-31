@@ -61,8 +61,7 @@ export default function(socket: GameSocket) {
       score: rooms[socket.roomCode].players[playerIndex].score
     });
 
-    // TODO: Change this
-    if(rooms[socket.roomCode].players[playerIndex].score === 2) {
+    if(rooms[socket.roomCode].players[playerIndex].score === 10) {
       if(rooms[socket.roomCode].scorecard.rounds[rooms[socket.roomCode].scorecard.rounds.length - 1].playerData.length === 1) {
         const otherPlayerIndex = playerIndex === 0 ? 1 : 0;
   

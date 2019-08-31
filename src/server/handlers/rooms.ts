@@ -17,7 +17,6 @@ export default function(socket: GameSocket) {
   }
   function leaveRoom() {
     if(socket.roomCode) {
-      
       if(rooms[socket.roomCode].players.length === 1) {
         destoryRoom();
         
@@ -25,14 +24,47 @@ export default function(socket: GameSocket) {
         
         return;
       }
-      
+
       const index = rooms[socket.roomCode].players.map((player) => {
         return player.username;
       }).indexOf(socket.username);
+
+      if(rooms[socket.roomCode].trivia.question && (rooms[socket.roomCode].players[0].score !== 10 || rooms[socket.roomCode].players[1].score !== 10)) {
+        rooms[socket.roomCode].hasWinner = true;
+        rooms[socket.roomCode].winner = index === 0 ? rooms[socket.roomCode].players[1].username : rooms[socket.roomCode].players[0].username;
+
+        const existingAnswers = rooms[socket.roomCode].scorecard.rounds[rooms[socket.roomCode].scorecard.rounds.length - 1].playerData.map((player) => {
+          return player.username;
+        });
+
+        if(!existingAnswers.includes(rooms[socket.roomCode].players[0].username)) {
+          rooms[socket.roomCode].scorecard.rounds[rooms[socket.roomCode].scorecard.rounds.length - 1].playerData.push({
+            username: rooms[socket.roomCode].players[0].username,
+            providedAnswer: 'None',
+            score: rooms[socket.roomCode].players[0].score
+          });
+        }
+        if(!existingAnswers.includes(rooms[socket.roomCode].players[1].username)) {
+          rooms[socket.roomCode].scorecard.rounds[rooms[socket.roomCode].scorecard.rounds.length - 1].playerData.push({
+            username: rooms[socket.roomCode].players[1].username,
+            providedAnswer: 'None',
+            score: rooms[socket.roomCode].players[1].score
+          });
+        }
+
+        io.sockets.to(socket.roomCode).emit('recieveRoomData', rooms[socket.roomCode]);
+
+        socket.leave(socket.roomCode);
+        socket.roomCode = '';
+
+        return;
+      }
+
       rooms[socket.roomCode].players = removeAt(rooms[socket.roomCode].players, index);
       
       socket.leave(socket.roomCode);
       io.sockets.to(socket.roomCode).emit('recieveRoomData', rooms[socket.roomCode]);
+
       socket.roomCode = '';
     }
   }
