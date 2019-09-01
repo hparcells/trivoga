@@ -58,7 +58,6 @@ export default function(socket: GameSocket) {
         socket.leave(socket.roomCode);
         socket.roomCode = '';
 
-
         return;
       }
 
