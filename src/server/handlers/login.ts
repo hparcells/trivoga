@@ -13,7 +13,9 @@ export default function(socket: GameSocket) {
   }, 500);
 
   socket.on('checkUsername', (username: string, callback: (loginResult: boolean) => void) => {
+    // Check if the username exists.
     if(!users.includes(username.toLowerCase())) {
+      // Add our username to the list of existing usernames.
       users.push(username.toLowerCase());
       socket.username = username;
 
@@ -26,6 +28,7 @@ export default function(socket: GameSocket) {
 
   socket.on('disconnect', () => {
     if(socket.username) {
+      // Remove our username from the list of existing usernames.
       users = remove(users, socket.username.toLowerCase());
 
       player(`${socket.username} disconnected.`);

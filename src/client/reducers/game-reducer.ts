@@ -32,6 +32,9 @@ export default function(state: Game = initialState, action: GameActionObject) {
     const newState = { ...state };
 
     if(newState.room && newState.room.trivia.question !== action.roomData.trivia.question) {
+      if(newState.room && newState.room.players.length !== 2) {
+        return newState;
+      }
       newState.hasAnsweredQuestion = false;
       newState.selectedAnswer = '';
     }

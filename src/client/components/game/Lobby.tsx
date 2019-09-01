@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
-import { Button, Paper, Typography, List, ListItem, ListItemText, Divider, ListItemIcon } from '@material-ui/core';
+import { Button, Paper, Typography, List, ListItem, ListItemText, Divider, ListItemIcon, CircularProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import socket from '../../socket';
@@ -14,6 +14,7 @@ import { normalizeDifficulty, normalizeType, normalizeCategoryId } from '../../u
 
 import AccountCheckIcon from '../icons/AccountCheck';
 import AccountIcon from '../icons/Account';
+import AccountOutlineIcon from '../icons/AccountOutline';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -22,6 +23,17 @@ const useStyles = makeStyles((theme) => ({
   list: {
     width: '100%',
     backgroundColor: theme.palette.background.paper
+  },
+  buttonProgressWrapper: {
+    margin: theme.spacing(1),
+    position: 'relative'
+  },
+  buttonProgress: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12
   }
 }));
 
@@ -103,9 +115,11 @@ function Lobby(
                 <ListItem>
                   <ListItemIcon>
                     {
-                      room.players[1] && room.players[1].ready
+                      room.players[1]
+                      ? room.players[1].ready
                         ? <AccountCheckIcon />
                         : <AccountIcon />
+                      : <AccountOutlineIcon />
                     }
                   </ListItemIcon>
                   <ListItemText primary={room.players[1] ? room.players[1].username : '???'} />
@@ -144,19 +158,22 @@ function Lobby(
             </Button>
           </Grid>
           <Grid item xs={12} sm={12} md={6}>
-            <Button variant="contained" color='primary' onClick={handleToggleReady} disabled={startButtonDisabled || room.starting} fullWidth>
-              {
-                room.players[0].username === username
-                ? ready
-                  ?  (room.players[0].ready == true) && (room.players[1] && room.players[1].ready === true)
-                    ? 'Start'
-                    : 'Not Ready'
-                  : 'Ready'
-                : ready
-                  ? 'Not Ready'
-                  : 'Ready'
-              }
-            </Button>
+            <div className={classes.buttonProgressWrapper}>
+              <Button variant="contained" color='primary' onClick={handleToggleReady} disabled={startButtonDisabled || room.starting} fullWidth>
+                {
+                  room.players[0].username === username
+                  ? ready
+                    ?  (room.players[0].ready == true) && (room.players[1] && room.players[1].ready === true)
+                      ? 'Start'
+                      : 'Not Ready'
+                    : 'Ready'
+                  : ready
+                    ? 'Not Ready'
+                    : 'Ready'
+                }
+              </Button>
+              {room.starting && <CircularProgress size={24} className={classes.buttonProgress} />}
+            </div>
           </Grid>
         </Grid>
       </div>
