@@ -31,6 +31,9 @@ export default function(socket: GameSocket) {
 
   
   socket.on('startGame', async() => {
+    rooms[socket.roomCode].starting = true;
+    io.sockets.to(socket.roomCode).emit('recieveRoomData', rooms[socket.roomCode]);
+
     try {
       rooms[socket.roomCode].trivia.sessionToken = await getSessionToken();
       rooms[socket.roomCode].started = true;

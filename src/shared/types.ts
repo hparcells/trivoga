@@ -28,6 +28,7 @@ export interface Room {
   roomCode: string,
   gameOptions: GameOptions
   started: boolean,
+  starting: boolean,
   trivia: {
     round: number,
     question: string,

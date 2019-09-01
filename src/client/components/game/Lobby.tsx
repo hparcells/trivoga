@@ -137,14 +137,14 @@ function Lobby(
               variant="contained"
               color='secondary'
               fullWidth
-              disabled={startButtonDisabled || ready}
+              disabled={startButtonDisabled || ready || room.starting}
               onClick={leaveGame}
             >
               Leave Match
             </Button>
           </Grid>
           <Grid item xs={12} sm={12} md={6}>
-            <Button variant="contained" color='primary' onClick={handleToggleReady} disabled={startButtonDisabled} fullWidth>
+            <Button variant="contained" color='primary' onClick={handleToggleReady} disabled={startButtonDisabled || room.starting} fullWidth>
               {
                 room.players[0].username === username
                 ? ready

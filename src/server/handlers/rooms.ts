@@ -87,6 +87,7 @@ export default function(socket: GameSocket) {
       roomCode: roomCode,
       gameOptions,
       started: false,
+      starting: false,
       trivia: {
         round: 1,
         question: '',
