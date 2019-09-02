@@ -34,7 +34,7 @@ export default function(socket: GameSocket) {
       }).indexOf(socket.username);
 
       // Check if we left mid-game.
-      if(rooms[socket.roomCode].trivia.question && (rooms[socket.roomCode].players[0].score !== 10 || rooms[socket.roomCode].players[1].score !== 10)) {
+      if(rooms[socket.roomCode].trivia.question && (rooms[socket.roomCode].players[0].score !== 10 && rooms[socket.roomCode].players[1].score !== 10)) {
         rooms[socket.roomCode].hasWinner = true;
         rooms[socket.roomCode].winner = index === 0 ? rooms[socket.roomCode].players[1].username : rooms[socket.roomCode].players[0].username;
 
