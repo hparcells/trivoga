@@ -5,13 +5,15 @@ import { Store } from '../store';
 import { updateUsername, submitUsername } from '../actions';
 
 function Login(
-  { username,
+  {
+    username,
     online,
     loginError,
     updateUsername,
     submitUsername 
   }:
-  { username: string,
+  {
+    username: string,
     online: number,
     loginError: string,
     updateUsername: (name: string) => void,
@@ -25,15 +27,15 @@ function Login(
   return (
     <div>
       <p>Online: {online || 'Fetching...'}</p>
-      <div>Username: <input type='text' onChange={handleUsernameChange} value={username}></input></div>
+      <div>Username: <input type='text' onChange={handleUsernameChange} value={username} aria-label='Username'></input></div>
       <button onClick={submitUsername}>Play!</button>
 
       {
         !!loginError
-        ? <p style={{
-          color: '#ff0000'
-        }}>{loginError}</p>
-        : null
+          ? <p style={{
+            color: '#ff0000'
+          }}>{loginError}</p>
+          : null
       }
     </div>
   );
