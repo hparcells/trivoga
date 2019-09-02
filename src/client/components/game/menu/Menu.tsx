@@ -35,7 +35,7 @@ function Menu(
       socket.removeListener('roomNoExist', handleNonExistentRoom);
     };
   }, []);
-  
+
   function handleRoomCodeChange(event: any) {
     changeRoomCode(event.target.value);
   }
@@ -46,14 +46,14 @@ function Menu(
         <button onClick={toggleCreationWindow}>Create Room</button>
 
         {
-          creationWindowOpen 
+          creationWindowOpen
           ? <CreationWindow />
           : null
         }
       </div>
-  
+
       <br />
-  
+
       <div>
         <input type='text' onChange={handleRoomCodeChange} value={roomCode} />
         <button onClick={joinRoom}>Join Room</button>
@@ -70,6 +70,6 @@ const mapDispatchToProps = {
   toggleCreationWindow,
   changeRoomCode,
   joinRoom
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);

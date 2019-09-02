@@ -1,34 +1,34 @@
 import { Difficulty, Type, CategoryId } from '../client/reducers/menu-reducer';
 
 export interface GameOptions {
-  difficulty: Difficulty,
-  type: Type,
-  category: CategoryId
-};
+  difficulty: Difficulty;
+  type: Type;
+  category: CategoryId;
+}
 export interface Player {
-  username: string,
-  score: number,
-  ready: boolean
+  username: string;
+  score: number;
+  ready: boolean;
 }
 interface PlayerScorecard {
-  username: string,
-  providedAnswer: string,
-  score: number
+  username: string;
+  providedAnswer: string;
+  score: number;
 }
 interface RoundInfo {
-  question: string,
-  answer: string,
-  playerData: PlayerScorecard[]
+  question: string;
+  answer: string;
+  playerData: PlayerScorecard[];
 }
 export interface Scorecard {
-  rounds: RoundInfo[]
+  rounds: RoundInfo[];
 }
 export interface Room {
-  players: Player[],
-  roomCode: string,
-  gameOptions: GameOptions
-  started: boolean,
-  starting: boolean,
+  players: Player[];
+  roomCode: string;
+  gameOptions: GameOptions;
+  started: boolean;
+  starting: boolean;
   trivia: {
     round: number,
     question: string,
@@ -36,8 +36,8 @@ export interface Room {
     answers: string[],
     sessionToken: string,
     submittedAnswers: number
-  },
-  hasWinner: boolean,
-  winner: string,
-  scorecard: Scorecard
+  };
+  hasWinner: boolean;
+  winner: string;
+  scorecard: Scorecard;
 }

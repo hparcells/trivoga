@@ -1,24 +1,43 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
-import { Button, Paper, Typography, List, ListItem, ListItemText, Divider, ListItemIcon, CircularProgress } from '@material-ui/core';
+import {
+  Button,
+  Paper,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
+  ListItemIcon,
+  CircularProgress
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import socket from '../../socket';
 
 import store, { Store } from '../../store';
 import { Room } from '../../../shared/types';
-import { toggleReady, recieveRoomData, startGame, leaveGame } from '../../actions';
+import {
+  toggleReady,
+  recieveRoomData,
+  startGame,
+  leaveGame
+} from '../../actions';
 
-import { normalizeDifficulty, normalizeType, normalizeCategoryId } from '../../utils/normalize';
+import {
+  normalizeDifficulty,
+  normalizeType,
+  normalizeCategoryId
+} from '../../utils/normalize';
 
 import AccountCheckIcon from '../icons/AccountCheck';
 import AccountIcon from '../icons/Account';
 import AccountOutlineIcon from '../icons/AccountOutline';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   paper: {
-    padding: theme.spacing(3, 2),
+    padding: theme.spacing(3, 2)
   },
   list: {
     width: '100%',
@@ -37,27 +56,23 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
-function Lobby(
-  {
-    username,
-    room,
-    ready,
-    startButtonDisabled,
-    toggleReady,
-    startGame,
-    leaveGame
-  }:
-  {
-    username: string,
-    room: Room | null,
-    ready: boolean,
-    startButtonDisabled: boolean,
-    toggleReady: () => void,
-    startGame: () => void,
-    leaveGame: () => void
-  }
-) {
+function Lobby({
+  username,
+  room,
+  ready,
+  startButtonDisabled,
+  toggleReady,
+  startGame,
+  leaveGame
+}: {
+  username: string;
+  room: Room | null;
+  ready: boolean;
+  startButtonDisabled: boolean;
+  toggleReady: () => void;
+  startGame: () => void;
+  leaveGame: () => void;
+}) {
   const classes = useStyles();
 
   useEffect(() => {
@@ -70,11 +85,13 @@ function Lobby(
       socket.removeListener('recieveRoomData', handleRecieveRoomData);
     };
   }, []);
-  
+
   function handleToggleReady() {
     if(
-      (room && room.players[0].ready == true) && (room && room.players[1] && room.players[1].ready === true)
-      && (room && room.players[0].username === username)
+      room &&
+      room.players[0].ready === true &&
+      (room && room.players[1] && room.players[1].ready === true) &&
+      (room && room.players[0].username === username)
     ) {
       startGame();
 
@@ -89,13 +106,20 @@ function Lobby(
       <div>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={6}>
-            <Paper className={classes.paper} style={{
-              marginBottom: '1em'
-            }}>
+            <Paper
+              className={classes.paper}
+              style={{
+                marginBottom: '1em'
+              }}
+            >
               <Typography variant='h5'>
-                <span style={{
-                  fontSize: '16px'
-                }}>Join with: </span>
+                <span
+                  style={{
+                    fontSize: '16px'
+                  }}
+                >
+                  Join with:{' '}
+                </span>
                 {room.roomCode}
               </Typography>
             </Paper>
@@ -104,25 +128,29 @@ function Lobby(
               <List>
                 <ListItem>
                   <ListItemIcon>
-                    {
-                      room.players[0].ready
-                        ? <AccountCheckIcon />
-                        : <AccountIcon />
-                    }
+                    {room.players[0].ready ? (
+                      <AccountCheckIcon />
+                    ) : (
+                      <AccountIcon />
+                    )}
                   </ListItemIcon>
                   <ListItemText primary={room.players[0].username} />
                 </ListItem>
                 <ListItem>
                   <ListItemIcon>
-                    {
-                      room.players[1]
-                      ? room.players[1].ready
-                        ? <AccountCheckIcon />
-                        : <AccountIcon />
-                      : <AccountOutlineIcon />
-                    }
+                    {room.players[1] ? (
+                      room.players[1].ready ? (
+                        <AccountCheckIcon />
+                      ) : (
+                        <AccountIcon />
+                      )
+                    ) : (
+                      <AccountOutlineIcon />
+                    )}
                   </ListItemIcon>
-                  <ListItemText primary={room.players[1] ? room.players[1].username : '???'} />
+                  <ListItemText
+                    primary={room.players[1] ? room.players[1].username : '???'}
+                  />
                 </ListItem>
               </List>
             </Paper>
@@ -133,22 +161,31 @@ function Lobby(
 
               <List className={classes.list}>
                 <ListItem>
-                  <ListItemText primary="Difficulty" secondary={normalizeDifficulty(room.gameOptions.difficulty)} />
+                  <ListItemText
+                    primary='Difficulty'
+                    secondary={normalizeDifficulty(room.gameOptions.difficulty)}
+                  />
                 </ListItem>
                 <Divider />
                 <ListItem>
-                  <ListItemText primary="Question Type" secondary={normalizeType(room.gameOptions.type)} />
+                  <ListItemText
+                    primary='Question Type'
+                    secondary={normalizeType(room.gameOptions.type)}
+                  />
                 </ListItem>
                 <Divider />
                 <ListItem>
-                  <ListItemText primary="Category" secondary={normalizeCategoryId(room.gameOptions.category)} />
+                  <ListItemText
+                    primary='Category'
+                    secondary={normalizeCategoryId(room.gameOptions.category)}
+                  />
                 </ListItem>
               </List>
             </Paper>
           </Grid>
           <Grid item xs={12} sm={12} md={6}>
             <Button
-              variant="contained"
+              variant='contained'
               color='secondary'
               fullWidth
               disabled={startButtonDisabled || ready || room.starting}
@@ -159,20 +196,30 @@ function Lobby(
           </Grid>
           <Grid item xs={12} sm={12} md={6}>
             <div className={classes.buttonProgressWrapper}>
-              <Button variant="contained" color='primary' onClick={handleToggleReady} disabled={startButtonDisabled || room.starting} fullWidth>
-                {
-                  room.players[0].username === username
+              <Button
+                variant='contained'
+                color='primary'
+                onClick={handleToggleReady}
+                disabled={startButtonDisabled || room.starting}
+                fullWidth
+              >
+                {room.players[0].username === username
                   ? ready
-                    ?  (room.players[0].ready == true) && (room.players[1] && room.players[1].ready === true)
+                    ? room.players[0].ready === true &&
+                      (room.players[1] && room.players[1].ready === true)
                       ? 'Start'
                       : 'Not Ready'
                     : 'Ready'
                   : ready
-                    ? 'Not Ready'
-                    : 'Ready'
-                }
+                  ? 'Not Ready'
+                  : 'Ready'}
               </Button>
-              {room.starting && <CircularProgress size={24} className={classes.buttonProgress} />}
+              {room.starting && (
+                <CircularProgress
+                  size={24}
+                  className={classes.buttonProgress}
+                />
+              )}
             </div>
           </Grid>
         </Grid>
@@ -191,6 +238,9 @@ const mapDispatchToProps = {
   toggleReady,
   startGame,
   leaveGame
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Lobby);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Lobby);

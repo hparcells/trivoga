@@ -52,7 +52,7 @@ function Trivia(
               triviaData && triviaData.answers.map((answer, index) => {
                 return (
                   <Answer key={index} label={answer} resultClass={selectedAnswer ? triviaData.answer === answer ? 'correct' : 'incorrect' : 'root'} />
-                )
+                );
               })
             }
           </Grid>

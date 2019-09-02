@@ -5,7 +5,7 @@ export type LoginActionObject
   = { type: 'UPDATE_USERNAME', username: string }
   | { type: 'SUBMIT_USERNAME' }
   | { type: 'LOGIN' }
-  | { type: 'USERNAME_TAKEN' }
+  | { type: 'USERNAME_TAKEN' };
 
 export type MenuActionObject
   = { type: 'TOGGLE_CREATION_WINDOW' }
@@ -15,7 +15,7 @@ export type MenuActionObject
   | { type: 'CREATE_ROOM', gameOptions: GameOptions }
   | { type: 'CHANGE_ROOM_CODE', roomCode: string }
   | { type: 'JOIN_ROOM' };
-  
+
 export type GameActionObject
   = { type: 'UPDATE_PLAYER_COUNT', count: number }
   | { type: 'RECIEVE_ROOM_DATA', roomData: Room }
@@ -24,5 +24,5 @@ export type GameActionObject
   | { type: 'SUBMIT_ANSWER', answer: string }
   | { type: 'NEW_ROUND' }
   | { type: 'LEAVE_GAME' };
-  
+
 export type ActionObject = LoginActionObject | GameActionObject | MenuActionObject;

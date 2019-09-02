@@ -36,7 +36,7 @@ function CreationWindow(
     changeCategory(event.target.value);
   }
   function handleCreateRoom() {
-    createRoom({ difficulty, type, category })
+    createRoom({ difficulty, type, category });
   }
 
   return (
@@ -93,7 +93,7 @@ function CreationWindow(
       </div>
       <button onClick={handleCreateRoom}>Go!</button>
     </div>
-  )
+  );
 }
 
 const mapStateToProps = (state: Store) => ({

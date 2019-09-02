@@ -1,4 +1,3 @@
-    
 import { createStore } from 'redux';
 
 import rootReducer from './reducers';
@@ -10,13 +9,13 @@ const reduxDevTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__;
 
 const store = createStore(
   rootReducer,
-  reduxDevTools ? reduxDevTools() : undefined,
+  reduxDevTools ? reduxDevTools() : undefined
 );
 
 export default store;
 
 export interface Store {
-  login: Login,
-  game: Game,
-  menu: Menu
+  login: Login;
+  game: Game;
+  menu: Menu;
 }

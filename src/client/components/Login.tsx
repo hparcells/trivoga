@@ -10,7 +10,7 @@ function Login(
     online,
     loginError,
     updateUsername,
-    submitUsername 
+    submitUsername
   }:
   {
     username: string,
@@ -27,7 +27,7 @@ function Login(
   return (
     <div>
       <p>Online: {online || 'Fetching...'}</p>
-      <div>Username: <input type='text' onChange={handleUsernameChange} value={username} aria-label='Username'></input></div>
+      <div>Username: <input type='text' onChange={handleUsernameChange} value={username} aria-label='Username'/></div>
       <button onClick={submitUsername}>Play!</button>
 
       {

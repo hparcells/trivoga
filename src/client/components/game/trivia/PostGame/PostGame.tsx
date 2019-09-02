@@ -12,11 +12,11 @@ import Scorecard from './Scorecard';
 
 const useStyles = makeStyles(theme => ({
   button: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   input: {
-    display: 'none',
-  },
+    display: 'none'
+  }
 }));
 
 function PostGame(
@@ -35,7 +35,7 @@ function PostGame(
     <div>
       <Typography variant='h3'>{room && room.winner} Won!</Typography>
       <Scorecard />
-      <Button variant="contained" color="primary" className={classes.button} onClick={leaveGame}>
+      <Button variant='contained' color='primary' className={classes.button} onClick={leaveGame}>
         Back to Home
       </Button>
     </div>

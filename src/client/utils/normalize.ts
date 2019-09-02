@@ -3,7 +3,7 @@ import { capitalize } from '@reverse/string';
 import { CategoryId, Category, Difficulty, Type } from '../reducers/menu-reducer';
 
 const categories: Category[] = [
-  'eneral Knowledge',
+  'General Knowledge',
   'Entertainment: Books',
   'Entertainment: Film',
   'Entertainment: Music',
@@ -26,7 +26,7 @@ const categories: Category[] = [
   'Entertainment: Comics',
   'Science: Gadgets',
   'Entertainment: Japanese Anime and Manga',
-  'Entertainment: Cartoon and Animations',
+  'Entertainment: Cartoon and Animations'
 ];
 
 export function normalizeCategoryId(id: CategoryId): Category {

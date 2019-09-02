@@ -16,7 +16,7 @@ function App({ loggedIn, updatePlayerCount }: { loggedIn: boolean, updatePlayerC
     }
 
     socket.on('playerCount', playerCountChange);
-    
+
     return () => {
       socket.removeListener('playerCount', playerCountChange);
     };

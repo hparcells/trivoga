@@ -13,7 +13,7 @@ function Answer(
     label,
     resultClass,
     hasAnsweredQuestion,
-    submitAnswer,
+    submitAnswer
   }:
   {
     label: string,
@@ -45,10 +45,10 @@ function Answer(
 }
 
 const mapStateToProps = (state: Store) => ({
-  hasAnsweredQuestion: state.game.hasAnsweredQuestion,
+  hasAnsweredQuestion: state.game.hasAnsweredQuestion
 });
 const mapDispatchToProps = {
   submitAnswer
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Answer);

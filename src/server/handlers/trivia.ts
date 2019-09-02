@@ -11,15 +11,15 @@ export default function(socket: GameSocket) {
   async function newQuestion(hasPreviousRound: boolean) {
     // Get the question data from the API.
     const questionData = await getQuestionData(getApiUrl(rooms[socket.roomCode].gameOptions, rooms[socket.roomCode].trivia.sessionToken));
-    
+
     // Set the question data for the players to use.
     rooms[socket.roomCode].trivia = {
       ...rooms[socket.roomCode].trivia,
       question: questionData.question,
       answer: questionData.answer,
       answers: shuffle(questionData.incorrectAnswers.concat(questionData.answer))
-    }
-    
+    };
+
     // Increase the round if there was a round during when we called this function.
     if(hasPreviousRound) {
       rooms[socket.roomCode].trivia.round++;
@@ -45,7 +45,7 @@ export default function(socket: GameSocket) {
 
       // Get a question.
       await newQuestion(false);
-    }catch(e) {
+    }catch (e) {
       // Webpage is blocked on network.
     }
 
@@ -78,7 +78,7 @@ export default function(socket: GameSocket) {
       // If we answered before the other person.
       if(rooms[socket.roomCode].scorecard.rounds[rooms[socket.roomCode].scorecard.rounds.length - 1].playerData.length === 1) {
         const otherPlayerIndex = playerIndex === 0 ? 1 : 0;
-  
+
         // Add them to the scorecard with the "None" answer.
         rooms[socket.roomCode].scorecard.rounds[rooms[socket.roomCode].scorecard.rounds.length - 1].playerData.push({
           username: rooms[socket.roomCode].players[otherPlayerIndex].username,
@@ -104,11 +104,11 @@ export default function(socket: GameSocket) {
 
         // Get a new question.
         await newQuestion(true);
-      }catch(e) {
+      }catch (e) {
         // Webpage is blocked on network.
       }
     }
-    
+
     io.sockets.to(socket.roomCode).emit('recieveRoomData', rooms[socket.roomCode]);
   });
 }

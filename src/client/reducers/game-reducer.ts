@@ -3,13 +3,13 @@ import { Room } from '../../shared/types';
 import socket from '../socket';
 
 export interface Game {
-  online: number,
-  room: Room | null,
-  ready: boolean,
-  startButtonDisabled: boolean,
-  hasAnsweredQuestion: boolean,
-  selectedAnswer: string
-};
+  online: number;
+  room: Room | null;
+  ready: boolean;
+  startButtonDisabled: boolean;
+  hasAnsweredQuestion: boolean;
+  selectedAnswer: string;
+}
 
 const initialState: Game = {
   online: 0,
@@ -25,7 +25,7 @@ export default function(state: Game = initialState, action: GameActionObject) {
     const newState = { ...state };
 
     newState.online = action.count;
-    
+
     return newState;
   }
   if(action.type === 'RECIEVE_ROOM_DATA') {
@@ -40,7 +40,7 @@ export default function(state: Game = initialState, action: GameActionObject) {
     }
 
     newState.room = action.roomData;
-    
+
     return newState;
   }
   if(action.type === 'TOOGLE_READY') {
@@ -74,7 +74,7 @@ export default function(state: Game = initialState, action: GameActionObject) {
     let newState = { ...state };
 
     socket.emit('leaveRoom');
-    
+
     newState = {
       ...newState,
       room: null,
@@ -82,7 +82,7 @@ export default function(state: Game = initialState, action: GameActionObject) {
       startButtonDisabled: false,
       hasAnsweredQuestion: false,
       selectedAnswer: ''
-    }
+    };
 
     return newState;
   }

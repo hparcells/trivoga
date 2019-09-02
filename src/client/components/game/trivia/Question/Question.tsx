@@ -20,7 +20,7 @@ function Question({ room }: { room: Room | null }) {
 }
 
 const mapStateToProps = (state: Store) => ({
-  room: state.game.room,
+  room: state.game.room
 });
 
 export default connect(mapStateToProps, {})(Question);

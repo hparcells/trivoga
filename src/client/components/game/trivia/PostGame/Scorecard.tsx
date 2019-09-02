@@ -22,14 +22,14 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(3),
     width: '100%',
     overflowX: 'auto',
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(2)
   },
   paper: {
     padding: theme.spacing(3, 2)
   },
   table: {
-    minWidth: 650,
-  },
+    minWidth: 650
+  }
 }));
 
 function Scorecard({ room }: { room: Room | null }) {
@@ -49,7 +49,7 @@ function Scorecard({ room }: { room: Room | null }) {
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <Paper className={classes.tablePaper}>
-              <Table className={classes.table} size="small">
+              <Table className={classes.table} size='small'>
                 <TableHead>
                   <TableRow>
                     <TableCell>#</TableCell>

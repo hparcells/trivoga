@@ -7,12 +7,12 @@ import { GameSocket } from '..';
 import { generateRoomCode } from '../utils/room';
 import { room } from '../utils/logger';
 
-export const rooms: {[K in string]: Room} = {};
+export const rooms: { [K in string]: Room } = {};
 
 export default function(socket: GameSocket) {
   function destoryRoom() {
     delete rooms[socket.roomCode];
-    
+
     room(`Room ${socket.roomCode} destoryed.`);
   }
   function leaveRoom() {
@@ -21,31 +21,41 @@ export default function(socket: GameSocket) {
       // Check if we are the last one in the room.
       if(rooms[socket.roomCode].players.length === 1) {
         destoryRoom();
-        
+
         // Cleanup.
         socket.roomCode = '';
-        
+
         return;
       }
 
       // Get our index in the players array.
-      const index = rooms[socket.roomCode].players.map((player) => {
+      const index = rooms[socket.roomCode].players.map(player => {
         return player.username;
       }).indexOf(socket.username);
 
       // Check if we left mid-game.
-      if(rooms[socket.roomCode].trivia.question && (rooms[socket.roomCode].players[0].score !== 10 && rooms[socket.roomCode].players[1].score !== 10)) {
+      if(
+        rooms[socket.roomCode].trivia.question &&
+        (rooms[socket.roomCode].players[0].score !== 10 && rooms[socket.roomCode].players[1].score !== 10)
+      ) {
         rooms[socket.roomCode].hasWinner = true;
-        rooms[socket.roomCode].winner = index === 0 ? rooms[socket.roomCode].players[1].username : rooms[socket.roomCode].players[0].username;
+        rooms[socket.roomCode].winner =
+          index === 0
+            ? rooms[socket.roomCode].players[1].username
+            : rooms[socket.roomCode].players[0].username;
 
         // An array of usernames of the player(s) that already submitted an answer.
-        const existingAnswers = rooms[socket.roomCode].scorecard.rounds[rooms[socket.roomCode].scorecard.rounds.length - 1].playerData.map((player) => {
+        const existingAnswers = rooms[socket.roomCode].scorecard.rounds[
+          rooms[socket.roomCode].scorecard.rounds.length - 1
+        ].playerData.map(player => {
           return player.username;
         });
 
         // Add a "None" answer to the scorecard if player 1 did not answer the question.
         if(!existingAnswers.includes(rooms[socket.roomCode].players[0].username)) {
-          rooms[socket.roomCode].scorecard.rounds[rooms[socket.roomCode].scorecard.rounds.length - 1].playerData.push({
+          rooms[socket.roomCode].scorecard.rounds[
+            rooms[socket.roomCode].scorecard.rounds.length - 1
+          ].playerData.push({
             username: rooms[socket.roomCode].players[0].username,
             providedAnswer: 'None',
             score: rooms[socket.roomCode].players[0].score
@@ -54,7 +64,9 @@ export default function(socket: GameSocket) {
 
         // Add a "None" answer to the scorecard if player 2 did not answer the question.
         if(!existingAnswers.includes(rooms[socket.roomCode].players[1].username)) {
-          rooms[socket.roomCode].scorecard.rounds[rooms[socket.roomCode].scorecard.rounds.length - 1].playerData.push({
+          rooms[socket.roomCode].scorecard.rounds[
+            rooms[socket.roomCode].scorecard.rounds.length - 1
+          ].playerData.push({
             username: rooms[socket.roomCode].players[1].username,
             providedAnswer: 'None',
             score: rooms[socket.roomCode].players[1].score
@@ -74,8 +86,11 @@ export default function(socket: GameSocket) {
       }
 
       // Remove the player from the players array.
-      rooms[socket.roomCode].players = removeAt(rooms[socket.roomCode].players, index);
-      
+      rooms[socket.roomCode].players = removeAt(
+        rooms[socket.roomCode].players,
+        index
+      );
+
       // Cleanup.
       socket.leave(socket.roomCode);
       io.sockets.to(socket.roomCode).emit('recieveRoomData', rooms[socket.roomCode]);
@@ -90,16 +105,16 @@ export default function(socket: GameSocket) {
     // Keep generating room codes until we have found an unused one.
     do {
       roomCode = generateRoomCode();
-    }while(Object.keys(rooms).includes(roomCode));
+    }while (Object.keys(rooms).includes(roomCode));
 
     const playerObject: Player = {
       username: socket.username,
       score: 0,
       ready: false
-    }
+    };
     const roomObject: Room = {
       players: [playerObject],
-      roomCode: roomCode,
+      roomCode,
       gameOptions,
       started: false,
       starting: false,
@@ -146,14 +161,16 @@ export default function(socket: GameSocket) {
     // Setup.
     socket.join(roomCode);
     socket.roomCode = roomCode;
-    
+
     io.sockets.to(roomCode).emit('recieveRoomData', rooms[roomCode]);
   });
   socket.on('toggleReady', () => {
     // Get our index in the player array.
-    const playerIndex = rooms[socket.roomCode].players.map((player) => {
-      return player.username;
-    }).indexOf(socket.username);
+    const playerIndex = rooms[socket.roomCode].players
+      .map(player => {
+        return player.username;
+      })
+      .indexOf(socket.username);
 
     rooms[socket.roomCode].players[playerIndex].ready = !rooms[socket.roomCode].players[playerIndex].ready;
 

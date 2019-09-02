@@ -5,10 +5,10 @@ import socket from '../socket';
 import store from '../store';
 
 export interface Login {
-  username: string,
-  loggedIn: boolean,
-  loginError: string
-};
+  username: string;
+  loggedIn: boolean;
+  loginError: string;
+}
 
 const initialState: Login = {
   username: '',
@@ -32,7 +32,7 @@ function loginReducer(state: Login = initialState, action: LoginActionObject) {
   }
   if(action.type === 'SUBMIT_USERNAME') {
     const newState = { ...state };
-    
+
     if(newState.username.length < 2 || newState.username.length > 16) {
       newState.loginError = 'Your username must be at least two characters and at most 16.';
       return newState;

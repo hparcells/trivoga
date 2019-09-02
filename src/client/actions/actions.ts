@@ -16,7 +16,7 @@ export function usernameTaken(): LoginActionObject {
 }
 
 export function toggleCreationWindow(): MenuActionObject {
-  return { type:'TOGGLE_CREATION_WINDOW' };
+  return { type: 'TOGGLE_CREATION_WINDOW' };
 }
 export function changeDifficulty(difficulty: Difficulty): MenuActionObject {
   return { type: 'CHANGE_DIFFICULTY', difficulty };

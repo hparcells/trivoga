@@ -3,17 +3,17 @@ import fetch from 'node-fetch';
 import { GameOptions } from '../../shared/types';
 
 interface QuestionData {
-  question: string,
-  answer: string,
-  incorrectAnswers: string[]
+  question: string;
+  answer: string;
+  incorrectAnswers: string[];
 }
 interface ResponseData {
-  category: string,
-  correct_answer: string,
-  difficulty: 'easy' | 'medium' | 'hard',
-  incorrect_answers: string[],
-  question: string,
-  type: 'multiple' | 'boolean'
+  category: string;
+  correct_answer: string;
+  difficulty: 'easy' | 'medium' | 'hard';
+  incorrect_answers: string[];
+  question: string;
+  type: 'multiple' | 'boolean';
 }
 
 export async function getSessionToken() {

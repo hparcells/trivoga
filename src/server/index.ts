@@ -6,8 +6,8 @@ import setupRooms from './handlers/rooms';
 import setupTrivia from './handlers/trivia';
 
 export interface GameSocket extends Socket  {
-  username: string,
-  roomCode: string
+  username: string;
+  roomCode: string;
 }
 
 io.on('connection', (socket: any) => {
