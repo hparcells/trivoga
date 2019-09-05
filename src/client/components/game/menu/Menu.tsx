@@ -10,14 +10,12 @@ import CreationWindow from './CreationWindow';
 
 function Menu(
   {
-    creationWindowOpen,
     roomCode,
     toggleCreationWindow,
     changeRoomCode,
     joinRoom
   }:
   {
-    creationWindowOpen: boolean,
     roomCode: string,
     toggleCreationWindow: () => void
     changeRoomCode: (roomCode: string) => void,
@@ -45,11 +43,7 @@ function Menu(
       <div>
         <button onClick={toggleCreationWindow}>Create Room</button>
 
-        {
-          creationWindowOpen
-          ? <CreationWindow />
-          : null
-        }
+        <CreationWindow />
       </div>
 
       <br />
@@ -63,7 +57,6 @@ function Menu(
 }
 
 const mapStateToProps = (state: Store) => ({
-  creationWindowOpen: state.menu.creationWindowOpen,
   roomCode: state.menu.roomCode
 });
 const mapDispatchToProps = {
