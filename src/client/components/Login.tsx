@@ -63,6 +63,7 @@ function Login(
             width: '100%',
             maxWidth: '350px'
           }}
+          alt='Trivoga Banner'
         />
         <Typography color='primary' variant='button' gutterBottom>Online: {online || 'Fetching...'}</Typography>
       </div>

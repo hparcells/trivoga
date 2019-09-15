@@ -1,8 +1,8 @@
 {
   "name": "trivoga",
-  "description": "Boilerplate code for making a server side app using React, Socket.io, and TypeScript.",
+  "description": "A fast-paced real-time 1v1 customizable trivia game.",
   "version": "1.0.0",
-  "author": "Dave Caruso",
+  "author": "Hunter Parcells",
   "scripts": {
     "start": "fullstack-system dev",
     "dev": "fullstack-system dev",
