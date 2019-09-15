@@ -92,7 +92,9 @@ function CreationWindow(
         <DialogTitle>Create Game</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Configure options for your game. You will not be able to change this once you create the game.
+            Configure options for your game. Keep in mind, the more specific you get
+            with these options, your game may halt and not continue because you used
+            all the questions with those parameters.
           </DialogContentText>
           <FormGroup row>
             <FormControl className={classes.formControl}>
