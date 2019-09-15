@@ -21,7 +21,7 @@
     "chart.js": "^2.8.0",
     "decimal-to-percent": "^1.0.1",
     "entities": "^2.0.0",
-    "fullstack-system": "^2.5.0",
+    "fullstack-system": "^2.5.6",
     "log-type": "^1.0.0",
     "node-fetch": "^2.6.0",
     "react": "^16.8.6",
